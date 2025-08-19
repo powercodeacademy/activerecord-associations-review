@@ -26,7 +26,7 @@ Like any other column, foreign keys are accessible through instance methods of t
 class AddAuthorIdToPosts < ActiveRecord::Migration[7.1]
   def change
     change_table :posts do |t|
-      t.references :author, foreign_key: true
+      t.references :author
     end
   end
 end
