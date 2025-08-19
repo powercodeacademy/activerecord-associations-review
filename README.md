@@ -22,17 +22,18 @@ It all starts in the database. **Foreign keys** are columns that refer to the pr
 
 Like any other column, foreign keys are accessible through instance methods of the same name. For example, a migration that looks like this:
 
-
-
 ```ruby
-class AddAuthorIdToPosts < ActiveRecord::Migration
+class AddAuthorIdToPosts < ActiveRecord::Migration[7.1]
   def change
     change_table :posts do |t|
-      t.integer :author_id
+      t.references :author, foreign_key: true
     end
   end
 end
 ```
+Remember, Active Record uses its [Inflector](https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html) to switch between the singular and plural forms of your models.
+
+You can see the entire [list of class methods](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html) in the Rails API docs.
 
 Would mean you could find a post's author with the following Active Record query:
 
@@ -99,7 +100,7 @@ Now we can look up an author's posts just as easily:
 @author.posts #=> [#<Post id=3>, #<Post id=8>]
 ```
 
-Remember, Active Record uses its [Inflector][api_inflector] to switch between the singular and plural forms of your models.
+Remember, Active Record uses its [Inflector](https://api.rubyonrails.org/classes/ActiveSupport/Inflector.html) to switch between the singular and plural forms of your models.
 
 <table border="1" cellpadding="4" cellspacing="0">
   <tr>
@@ -162,7 +163,7 @@ new_author = @post.build_author(name: "Leeroy Jenkins")
 
 Remember, if you used the `build_` option, you'll need to persist your new `author` with `#save`.
 
-These methods are also documented in the [Rails Associations Guide][guides_associations].
+These methods are also documented in the [Rails Associations Guide](https://guides.rubyonrails.org/association_basics.html).
 
 ### Collection Convenience
 
@@ -285,9 +286,4 @@ One-to-one and many-to-one relationships only require a single foreign key, whic
 Many-to-many relationships require a join table containing a foreign key for both models. The models are joined using `has_many :through` statements.
 
 
-You can see the entire [list of class methods][api_associations_class_methods] in the Rails API docs.
-
-[guides_associations]: http://guides.rubyonrails.org/association_basics.html
-[guides_has_many_through]: http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association
-[api_associations_class_methods]: http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
-[api_inflector]: http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html
+You can see the entire [list of class methods](https://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html) in the Rails API docs.
