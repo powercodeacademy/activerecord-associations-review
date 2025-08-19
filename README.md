@@ -22,6 +22,8 @@ It all starts in the database. **Foreign keys** are columns that refer to the pr
 
 Like any other column, foreign keys are accessible through instance methods of the same name. For example, a migration that looks like this:
 
+
+
 ```ruby
 class AddAuthorIdToPosts < ActiveRecord::Migration
   def change
@@ -150,7 +152,7 @@ This will return a new `Post` object with the `author_id` already set for you! W
 The setup process is a little bit less intuitive for singular associations. Remember, a post `belongs_to` an author. The verbose way of creating this association would be like so:
 
 ```ruby
-@post.author = Author.new(name: "Leeroy Jenkins") 
+@post.author = Author.new(name: "Leeroy Jenkins")
 ```
 In the previous section, `@author.posts` always exists, even if it's an empty array. Here, `@post.author` is `nil` until the author is defined, so Active Record can't give us something like `@post.author.build`. Instead, it prepends the attribute with `build_` or `create_`. The `create_` option will persist to the database for you.
 
